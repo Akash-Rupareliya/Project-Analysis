@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ToyManufacturerDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressLocation" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pincode" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerMobileNumber" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Offers">
+          <Key>
+            <PropertyRef Name="OfferId" />
+          </Key>
+          <Property Name="OfferId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MinAmount" Type="int" Nullable="false" />
+          <Property Name="Discount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderInvoice">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ToyId" Type="int" Nullable="false" />
+          <Property Name="OrderDetailDate" Type="date" Nullable="false" />
+          <Property Name="OfferId" Type="int" Nullable="false" />
+          <Property Name="FinalPrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Plants">
+          <Key>
+            <PropertyRef Name="PlantId" />
+          </Key>
+          <Property Name="PlantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlantName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PlantAddress" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="PlantMobileNumber" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Toys">
+          <Key>
+            <PropertyRef Name="ToyId" />
+          </Key>
+          <Property Name="ToyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToyName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ToyPrice" Type="int" Nullable="false" />
+          <Property Name="ToyDetail" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PlantId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ToyManufacturerDb.dbo.vOrderDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vOrderDetails">
+          <Key>
+            <PropertyRef Name="ToyName" />
+            <PropertyRef Name="OrderDetailDate" />
+            <PropertyRef Name="FinalPrice" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="CustomerEmail" />
+            <PropertyRef Name="CustomerMobileNumber" />
+            <PropertyRef Name="AddressLocation" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="Pincode" />
+            <PropertyRef Name="OfferId" />
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="ToyName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderDetailDate" Type="date" Nullable="false" />
+          <Property Name="FinalPrice" Type="int" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerMobileNumber" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="AddressLocation" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pincode" Type="int" Nullable="false" />
+          <Property Name="OfferId" Type="int" Nullable="false" />
+          <Property Name="OrderDetailId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Addresses_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Addresses">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderInvoice" Type="Self.OrderInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderInvoice">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Toys">
+          <End Role="Toys" Type="Self.Toys" Multiplicity="1" />
+          <End Role="OrderInvoice" Type="Self.OrderInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Toys">
+              <PropertyRef Name="ToyId" />
+            </Principal>
+            <Dependent Role="OrderInvoice">
+              <PropertyRef Name="ToyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderInvoice_Offers">
+          <End Role="Offers" Type="Self.Offers" Multiplicity="1" />
+          <End Role="OrderInvoice" Type="Self.OrderInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offers">
+              <PropertyRef Name="OfferId" />
+            </Principal>
+            <Dependent Role="OrderInvoice">
+              <PropertyRef Name="OfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Toys_Plants">
+          <End Role="Plants" Type="Self.Plants" Multiplicity="1" />
+          <End Role="Toys" Type="Self.Toys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plants">
+              <PropertyRef Name="PlantId" />
+            </Principal>
+            <Dependent Role="Toys">
+              <PropertyRef Name="PlantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToyManufacturerDbModelStoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderInvoice" EntityType="Self.OrderInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plants" EntityType="Self.Plants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Toys" EntityType="Self.Toys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vOrderDetails" EntityType="Self.vOrderDetails" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vOrderDetails].[ToyName] AS [ToyName], 
+    [vOrderDetails].[OrderDetailDate] AS [OrderDetailDate], 
+    [vOrderDetails].[FinalPrice] AS [FinalPrice], 
+    [vOrderDetails].[CustomerName] AS [CustomerName], 
+    [vOrderDetails].[CustomerEmail] AS [CustomerEmail], 
+    [vOrderDetails].[CustomerMobileNumber] AS [CustomerMobileNumber], 
+    [vOrderDetails].[AddressLocation] AS [AddressLocation], 
+    [vOrderDetails].[City] AS [City], 
+    [vOrderDetails].[Pincode] AS [Pincode], 
+    [vOrderDetails].[OfferId] AS [OfferId], 
+    [vOrderDetails].[OrderDetailId] AS [OrderDetailId]
+    FROM [dbo].[vOrderDetails] AS [vOrderDetails]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Addresses_Customers" Association="Self.FK_Addresses_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Addresses" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderInvoice" EntitySet="OrderInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Toys" Association="Self.FK_OrderDetails_Toys">
+            <End Role="Toys" EntitySet="Toys" />
+            <End Role="OrderInvoice" EntitySet="OrderInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderInvoice_Offers" Association="Self.FK_OrderInvoice_Offers">
+            <End Role="Offers" EntitySet="Offers" />
+            <End Role="OrderInvoice" EntitySet="OrderInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Toys_Plants" Association="Self.FK_Toys_Plants">
+            <End Role="Plants" EntitySet="Plants" />
+            <End Role="Toys" EntitySet="Toys" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ToyManufacturerDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Addresses_Customers" FromRole="Addresses" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerMobileNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Addresses" Relationship="Self.FK_Addresses_Customers" FromRole="Customers" ToRole="Addresses" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Offer">
+          <Key>
+            <PropertyRef Name="OfferId" />
+          </Key>
+          <Property Name="OfferId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MinAmount" Type="Int32" Nullable="false" />
+          <Property Name="Discount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderInvoices" Relationship="Self.FK_OrderInvoice_Offers" FromRole="Offers" ToRole="OrderInvoice" />
+        </EntityType>
+        <EntityType Name="OrderInvoice">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ToyId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDetailDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="OfferId" Type="Int32" Nullable="false" />
+          <Property Name="FinalPrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Offer" Relationship="Self.FK_OrderInvoice_Offers" FromRole="OrderInvoice" ToRole="Offers" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderInvoice" ToRole="Orders" />
+          <NavigationProperty Name="Toy" Relationship="Self.FK_OrderDetails_Toys" FromRole="OrderInvoice" ToRole="Toys" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="OrderInvoices" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderInvoice" />
+        </EntityType>
+        <EntityType Name="Plant">
+          <Key>
+            <PropertyRef Name="PlantId" />
+          </Key>
+          <Property Name="PlantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlantName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PlantAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PlantMobileNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Toys" Relationship="Self.FK_Toys_Plants" FromRole="Plants" ToRole="Toys" />
+        </EntityType>
+        <EntityType Name="Toy">
+          <Key>
+            <PropertyRef Name="ToyId" />
+          </Key>
+          <Property Name="ToyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ToyPrice" Type="Int32" Nullable="false" />
+          <Property Name="ToyDetail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PlantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderInvoices" Relationship="Self.FK_OrderDetails_Toys" FromRole="Toys" ToRole="OrderInvoice" />
+          <NavigationProperty Name="Plant" Relationship="Self.FK_Toys_Plants" FromRole="Toys" ToRole="Plants" />
+        </EntityType>
+        <EntityType Name="vOrderDetail">
+          <Key>
+            <PropertyRef Name="ToyName" />
+            <PropertyRef Name="OrderDetailDate" />
+            <PropertyRef Name="FinalPrice" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="CustomerEmail" />
+            <PropertyRef Name="CustomerMobileNumber" />
+            <PropertyRef Name="AddressLocation" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="Pincode" />
+            <PropertyRef Name="OfferId" />
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="ToyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrderDetailDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FinalPrice" Type="Int32" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerMobileNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddressLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="OfferId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Addresses_Customers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Addresses" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Addresses">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderInvoice_Offers">
+          <End Role="Offers" Type="Self.Offer" Multiplicity="1" />
+          <End Role="OrderInvoice" Type="Self.OrderInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offers">
+              <PropertyRef Name="OfferId" />
+            </Principal>
+            <Dependent Role="OrderInvoice">
+              <PropertyRef Name="OfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderInvoice" Type="Self.OrderInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderInvoice">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Toys">
+          <End Role="Toys" Type="Self.Toy" Multiplicity="1" />
+          <End Role="OrderInvoice" Type="Self.OrderInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Toys">
+              <PropertyRef Name="ToyId" />
+            </Principal>
+            <Dependent Role="OrderInvoice">
+              <PropertyRef Name="ToyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Toys_Plants">
+          <End Role="Plants" Type="Self.Plant" Multiplicity="1" />
+          <End Role="Toys" Type="Self.Toy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plants">
+              <PropertyRef Name="PlantId" />
+            </Principal>
+            <Dependent Role="Toys">
+              <PropertyRef Name="PlantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToyManufacturerDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Offers" EntityType="Self.Offer" />
+          <EntitySet Name="OrderInvoices" EntityType="Self.OrderInvoice" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Plants" EntityType="Self.Plant" />
+          <EntitySet Name="Toys" EntityType="Self.Toy" />
+          <EntitySet Name="vOrderDetails" EntityType="Self.vOrderDetail" />
+          <AssociationSet Name="FK_Addresses_Customers" Association="Self.FK_Addresses_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Addresses" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderInvoice_Offers" Association="Self.FK_OrderInvoice_Offers">
+            <End Role="Offers" EntitySet="Offers" />
+            <End Role="OrderInvoice" EntitySet="OrderInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderInvoice" EntitySet="OrderInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Toys" Association="Self.FK_OrderDetails_Toys">
+            <End Role="Toys" EntitySet="Toys" />
+            <End Role="OrderInvoice" EntitySet="OrderInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Toys_Plants" Association="Self.FK_Toys_Plants">
+            <End Role="Plants" EntitySet="Plants" />
+            <End Role="Toys" EntitySet="Toys" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ToyManufacturerDbModelStoreContainer" CdmEntityContainer="ToyManufacturerDbEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="AddressLocation" ColumnName="AddressLocation" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerMobileNumber" ColumnName="CustomerMobileNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offers">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.Offer">
+              <MappingFragment StoreEntitySet="Offers">
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+                <ScalarProperty Name="MinAmount" ColumnName="MinAmount" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderInvoices">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.OrderInvoice">
+              <MappingFragment StoreEntitySet="OrderInvoice">
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ToyId" ColumnName="ToyId" />
+                <ScalarProperty Name="OrderDetailDate" ColumnName="OrderDetailDate" />
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+                <ScalarProperty Name="FinalPrice" ColumnName="FinalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plants">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.Plant">
+              <MappingFragment StoreEntitySet="Plants">
+                <ScalarProperty Name="PlantId" ColumnName="PlantId" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="PlantAddress" ColumnName="PlantAddress" />
+                <ScalarProperty Name="PlantMobileNumber" ColumnName="PlantMobileNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Toys">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.Toy">
+              <MappingFragment StoreEntitySet="Toys">
+                <ScalarProperty Name="ToyId" ColumnName="ToyId" />
+                <ScalarProperty Name="ToyName" ColumnName="ToyName" />
+                <ScalarProperty Name="ToyPrice" ColumnName="ToyPrice" />
+                <ScalarProperty Name="ToyDetail" ColumnName="ToyDetail" />
+                <ScalarProperty Name="PlantId" ColumnName="PlantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vOrderDetails">
+            <EntityTypeMapping TypeName="ToyManufacturerDbModel.vOrderDetail">
+              <MappingFragment StoreEntitySet="vOrderDetails">
+                <ScalarProperty Name="ToyName" ColumnName="ToyName" />
+                <ScalarProperty Name="OrderDetailDate" ColumnName="OrderDetailDate" />
+                <ScalarProperty Name="FinalPrice" ColumnName="FinalPrice" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerMobileNumber" ColumnName="CustomerMobileNumber" />
+                <ScalarProperty Name="AddressLocation" ColumnName="AddressLocation" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
