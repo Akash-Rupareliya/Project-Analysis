@@ -38,9 +38,8 @@ namespace FileOperationApplication
                         }
                         else
                         {
-                            Console.WriteLine("");
+                            Console.WriteLine("Creation Failed");
                         }
-                         //   file.flu
                             break;
                     case 2:
                         Console.WriteLine("Enter Source File Name : ");
