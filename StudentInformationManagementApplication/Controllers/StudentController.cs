@@ -13,6 +13,11 @@ namespace StudentInformationManagementApplication.Controllers
     public class StudentController : ControllerBase
     {
         public StudentDomain StudentDomain { get; set; }
+     
+        public StudentController()
+        {
+            this.StudentDomain = new StudentDomain();
+        }
         // GET: api/Student
         [HttpGet]
         public IEnumerable<string> Get()
@@ -21,7 +26,7 @@ namespace StudentInformationManagementApplication.Controllers
         }
 
         // GET: api/Student/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var studentData = this.StudentDomain.Get(id);

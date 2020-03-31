@@ -10,7 +10,7 @@ namespace StudentInformationManagementApplication.Domains
     {
         public List<Course> Get()
         {
-            var reader = this.GetReader($"select * from Cources");
+            var reader = this.GetReader($"select * from Courses");
             var courseList = new List<Course>();
             while (reader.Read())
             {

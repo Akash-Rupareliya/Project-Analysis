@@ -13,7 +13,7 @@ namespace StudentInformationManagementApplication.Domains
 
         public BaseDomain()
         {
-            this.SqlConnection = new SqlConnection(@"Data Source=Akash-Rupareliy;Initial Catalog=StudentInformationManagementSystemDb;Integrated Security=True");
+            this.SqlConnection = new SqlConnection(@"Data Source=Akash-Rupareliy;Initial Catalog=StudentInformationManagementSystemDb;Integrated Security=True;MultipleActiveResultSets=True");
             this.SqlConnection.Open();
         }
 

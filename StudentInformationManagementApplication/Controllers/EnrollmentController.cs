@@ -14,6 +14,10 @@ namespace StudentInformationManagementApplication.Controllers
     public class EnrollmentController : ControllerBase
     {
         public EnrollmentDomain EnrollmentDomain { get; set; }
+        public EnrollmentController()
+        {
+            this.EnrollmentDomain = new EnrollmentDomain();
+        }
         // GET: api/Enrollment
         [HttpGet]
         public IEnumerable<string> Get()
@@ -22,7 +26,7 @@ namespace StudentInformationManagementApplication.Controllers
         }
 
         // GET: api/Enrollment/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var enrollList = this.EnrollmentDomain.Get(id);

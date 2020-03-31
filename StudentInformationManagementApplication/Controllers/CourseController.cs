@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentInformationManagementApplication.Domains;
-
+using StudentInformationManagementApplication.Models;
 
 namespace StudentInformationManagementApplication.Controllers
 {
@@ -10,6 +10,10 @@ namespace StudentInformationManagementApplication.Controllers
     {
         public CourseDomain CourseDomain { get; set; }
         // GET: api/Course
+        public CourseController()
+        {
+            this.CourseDomain = new CourseDomain();
+        }
         [HttpGet]
         public IActionResult Get()
         {
@@ -18,7 +22,7 @@ namespace StudentInformationManagementApplication.Controllers
         }
 
         // GET: api/Course/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";

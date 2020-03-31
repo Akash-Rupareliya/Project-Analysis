@@ -21,7 +21,7 @@ namespace StudentInformationManagementApplication.Domains
         }
         public List<Student> Get(int id)
         {
-            var reader = this.GetReader($"select * from Student where StudentId={id}");
+            var reader = this.GetReader($"select * from Students where StudentId={id}");
             var studentList = new List<Student>();
             while (reader.Read())
             {
