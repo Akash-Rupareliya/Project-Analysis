@@ -1,0 +1,51 @@
+<p>
+  Hello Edit
+</p>
+<html>
+  <head><title>SignUp</title>
+  </head> 
+  <body>
+    <form [formGroup]="editStudentFormGroup">
+    <div class="container">
+      <div class="row">
+        <div class="form-group">
+            <div class="col-lg-8"><a style="font-size" class="text-center logo_text">Student Information Update </a></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label for="studentName">Student Name</label>
+            <input type="text"  formControlName="studentName" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label for="studentMobileNo">Mobile No.</label>
+            <input type="text" formControlName="studentMobileNo" class="form-control" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label for="studentEmailId">Email</label>
+            <input type="email" formControlName="studentEmailId" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-group">
+       <button class="btn btn-block btn-theme btn-primary"  (click)="submit()">Update</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </form>
+  </body>
+  
+</html>

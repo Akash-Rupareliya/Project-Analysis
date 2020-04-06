@@ -22,5 +22,9 @@ namespace StudentInformationManagementApplication.Domains
             }
             return courseList;
         }
+        public void Add(Course c)
+        {
+            this.ExecuteNonQuery($"insert into Courses (CourseName,CourseFee) values('{c.CourseName}','{c.CourseFee}')");
+        }
     }
 }

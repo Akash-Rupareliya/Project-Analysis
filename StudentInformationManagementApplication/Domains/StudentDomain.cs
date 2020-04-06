@@ -28,11 +28,28 @@ namespace StudentInformationManagementApplication.Domains
                 Student s = new Student();
                 s.StudentId = reader.GetInt32(0);
                 s.StudentName = reader.GetString(1);
-                s.StudentEmailId = reader.GetString(2);
-                s.StudentMobileNo = reader.GetString(3);
+                s.StudentEmailId = reader.GetString(3);
+                s.StudentMobileNo = reader.GetString(2);
                 studentList.Add(s);
             }
                 return studentList;
+        }
+        public List<Student> Get()
+        {
+            
+            var reader = this.GetReader($"select * from Students");
+            var studentList = new List<Student>();
+            while (reader.Read())
+            {
+                Student s = new Student();
+                s.StudentId = reader.GetInt32(0);
+                s.StudentName = reader.GetString(1);
+                s.StudentEmailId = reader.GetString(3);
+                s.StudentMobileNo = reader.GetString(2);
+                studentList.Add(s);
+            }
+            return studentList;
+
         }
     }
 }

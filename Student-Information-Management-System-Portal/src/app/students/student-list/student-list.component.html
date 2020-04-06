@@ -1,0 +1,24 @@
+<p>
+  student-list works!
+</p>
+
+<table class="table-striped">
+  <thead>
+      <tr>
+        <th>Name</th>
+        <th>Mobile No</th>
+        <th>Email</th>
+     <!--   <th>Update</th>-->
+        <th>Select</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let r of result;let i=index">
+    <td>{{r.studentName}}</td>
+    <td>{{r.studentMobileNo}}</td>
+    <td>{{r.studentEmailId}}</td>
+   <!-- <td><button class="form-control" routerLink=[r.studentId]>Update</button></td>-->
+    <td><button class="form-control">Select</button></td>
+    </tr>
+    </tbody>
+</table>

@@ -30,8 +30,10 @@ namespace StudentInformationManagementApplication.Controllers
 
         // POST: api/Course
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Course c)
         {
+            this.CourseDomain.Add(c);
+            return Ok();
         }
 
         // PUT: api/Course/5

@@ -20,9 +20,10 @@ namespace StudentInformationManagementApplication.Controllers
         }
         // GET: api/Student
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var studentData = this.StudentDomain.Get();
+            return Ok(studentData);
         }
 
         // GET: api/Student/5

@@ -1,0 +1,21 @@
+<p>
+  course-list works!
+</p>
+
+<table class="table-striped">
+  <thead>
+      <tr>
+        <th>Course Name </th>
+        <th>Course Fee</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let r of result;let i=index">
+    <td>{{r.courseName}}</td>
+    <td>{{r.courseFee}}</td>
+   <!-- <td><button class="form-control" routerLink=[r.studentId]>Update</button></td>-->
+    <td><button class="form-control">Select</button></td>
+    </tr>
+    </tbody>
+</table>
